@@ -2,16 +2,14 @@ name: Update README cards
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Runs once daily at midnight
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
-
     steps:
       - uses: actions/checkout@v6
 
@@ -31,12 +29,60 @@ jobs:
           path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate pinned repos card
+      - name: Pin isro-remake
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: pin
-          options: username=${{ github.repository_owner }}&repo=srikar-up
-          path: profile/pinned.svg
+          options: username=${{ github.repository_owner }}&repo=isro-remake
+          path: profile/pin-isro-remake.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin neobrutal-web
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=neobrutal-web
+          path: profile/pin-neobrutal-web.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin protfolio-website
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=protfolio-website
+          path: profile/pin-protfolio-website.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin gameup-sheets
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=gameup-sheets
+          path: profile/pin-gameup-sheets.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin stonks-GoogleSheet
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=stonks-GoogleSheet
+          path: profile/pin-stonks.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin flypiano
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=flypiano
+          path: profile/pin-flypiano.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin stock
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=stock
+          path: profile/pin-stock.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit cards
