@@ -1,30 +1,32 @@
-name: Update GitHub Readme Stats
+name: Update README cards
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Updates automatically every 6 hours
-  workflow_dispatch: # Allows you to run it manually anytime
-
-# 🔑 ADDED: Gives the runner permission to push the generated SVG images into your repo
-permissions:
-  contents: write
+    - cron: "0 0 * * *" # Runs once daily at midnight
+  workflow_dispatch:
 
 jobs:
-  update-stats:
+  build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Generate Stats Card
-        run: |
-          curl -s "https://shion.dev" -o stats.svg
-          curl -s "https://shion.dev" -o langs.svg
+      - name: Generate stats card
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          options: username=${{ github.repository_owner }}&show_icons=true
+          path: profile/stats.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit and Push Changes
+      - name: Commit cards
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@://github.com"
-          git add stats.svg langs.svg
-          git diff-index --quiet HEAD || git commit -m "Automated metrics update"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile/*.svg
+          git commit -m "Update README cards" || exit 0
           git push
