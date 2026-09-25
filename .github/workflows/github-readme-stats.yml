@@ -5,6 +5,10 @@ on:
     - cron: '0 */6 * * *' # Updates automatically every 6 hours
   workflow_dispatch: # Allows you to run it manually anytime
 
+# 🔑 ADDED: Gives the runner permission to push the generated SVG images into your repo
+permissions:
+  contents: write
+
 jobs:
   update-stats:
     runs-on: ubuntu-latest
