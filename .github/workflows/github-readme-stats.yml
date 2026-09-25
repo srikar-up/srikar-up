@@ -1,0 +1,26 @@
+name: Update GitHub Readme Stats
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Updates automatically every 6 hours
+  workflow_dispatch: # Allows you to run it manually anytime
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Generate Stats Card
+        run: |
+          curl -s "https://shion.dev" -o stats.svg
+          curl -s "https://shion.dev" -o langs.svg
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@://github.com"
+          git add stats.svg langs.svg
+          git diff-index --quiet HEAD || git commit -m "Automated metrics update"
+          git push
